@@ -4,8 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using VoAnhVu_DuAn1.Entity;
 using VoAnhVu_DuAn1.Model;
-using VoAnhVu_DuAn1.Services;
+using VoAnhVu_DuAn1.Service;
 
 namespace VoAnhVu_DuAn1.Controllers
 {
@@ -13,49 +14,126 @@ namespace VoAnhVu_DuAn1.Controllers
     [ApiController]
     public class RoleController : ControllerBase
     {
-        private readonly RoleService _roleService;
-
-        public RoleController(RoleService roleService)
+        private readonly IRoleService _roleService;
+        public RoleController(IRoleService roleService)
         {
             _roleService = roleService;
         }
-
         [HttpGet]
-        public IActionResult GetAllRole()
+        [Route("/api/[Controller]/get-all-role")]
+        public IActionResult getAllRole()
         {
-            var role = _roleService.GetAllRoles();
-            return Ok(role);
+            try
+            {
+                var role = _roleService.getAllRole().ToList();
+                if (!role.Any())
+                {
+                    return BadRequest("Không có vai trò nào.");
+                }
+                return Ok(role);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpGet]
+        [Route("/api/[Controller]/get-role-by-id")]
+        public IActionResult getRoleById(string id)
+        {
+            try
+            {
+                var role = _roleService.getRoleById(id);
+                if (role is null)
+                {
+                    return BadRequest("Không có vai trò.");
+                }
+                return Ok(role);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpGet]
+        [Route("/api/[Controller]/search-role")]
+        public IActionResult searchRole(string key)
+        {
+            try
+            {
+                var role = _roleService.searchRole(key).ToList();
+                if (!role.Any())
+                {
+                    return BadRequest("Không tìm thấy vai trò.");
+                }
+                return Ok(role);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
         [HttpPost]
-        public IActionResult AddRole([FromBody] Role role)
-        {
-            _roleService.AddRole(role);
-            return Ok();
-        }
-        [HttpDelete("id")]
-        public IActionResult DeleteRole(int id)
+        [Route("/api/[Controller]/create-role")]
+        public IActionResult createRole(RoleModel role)
         {
             try
             {
-                _roleService.DeleteRole(id);
-                return Ok("Xóa thành công.");
+                var kt = _roleService.getAllRole().Where(c => c.RoleId == role.RoleId);
+                if (kt.Any())
+                {
+                    return BadRequest("Id đã tồn tại ! Hãy nhập mã khác");
+                }
+                RoleEntity roleEntity = new RoleEntity
+                {
+                    RoleId = role.RoleId,
+                    RoleName = role.RoleName,
+                    Decription = role.Decription,
+                };
+                _roleService.createRole(roleEntity);
+                return Ok(roleEntity);
             }
-            catch
+            catch(Exception ex)
             {
-                return Ok("Xóa không thành công.");
+                return BadRequest(ex.Message);
             }
         }
-        [HttpPut("id")]
-        public IActionResult UpdateRole(int id, [FromBody] Role updateRole)
+        [HttpPut]
+        [Route("/api/[Controller]/update-role")]
+        public IActionResult updateRole(RoleModel role)
         {
             try
             {
-                _roleService.UpdateRole(id, updateRole);
-                return Ok("Sửa thành công.");
+                RoleEntity rl = new RoleEntity
+                {
+                    RoleId = role.RoleId,
+                    RoleName = role.RoleName,
+                    Decription = role.Decription,
+                };
+                _roleService.updateRole(rl);
+                return Ok(rl);
             }
-            catch
+            catch(Exception ex)
             {
-                return Ok("Sửa không thành công.");
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpDelete]
+        [Route("/api/[Controller]/delete-role")]
+        public IActionResult deleteRole(string id)
+        {
+            try
+            {
+                bool role = _roleService.deleteRole(id);
+                if (!role)
+                {
+                    return BadRequest("Không tìm thấy vai trò để xóa!");
+                }
+                return Ok("Xóa thành công");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
             }
         }
     }

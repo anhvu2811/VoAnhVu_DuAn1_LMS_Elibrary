@@ -5,20 +5,16 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace VoAnhVu_DuAn1.Model
+namespace VoAnhVu_DuAn1.Entity
 {
     [Table("Role")]
-    public class Role
+    public class RoleEntity
     {
         [Key]
-        public int RoleId { get; set; }
-        [Required]
-        [MaxLength(50)]
-        public string  RoleName{ get; set; }
-        [Required]
-        [MaxLength(255)]
+        public string RoleId { get; set; }
+        public string RoleName { get; set; }
         public string Decription { get; set; }
 
-        public virtual ICollection<User> Users { get; set; }
+        public virtual ICollection<UserEntity> Users { get; set; }
     }
 }

@@ -13,7 +13,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using VoAnhVu_DuAn1.Model;
-using VoAnhVu_DuAn1.Services;
+using VoAnhVu_DuAn1.Repository;
+using VoAnhVu_DuAn1.Service;
 
 namespace VoAnhVu_DuAn1
 {
@@ -41,7 +42,11 @@ namespace VoAnhVu_DuAn1
             services.AddDbContext<MyDbContext>(options => {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
-            services.AddScoped<RoleService>();
+            services.AddScoped<IRoleRepository, RoleRepository>();
+            services.AddScoped<IRoleService, RoleService>();
+
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserService, UserService>();
 
         }
 

@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using VoAnhVu_DuAn1.Model;
+using VoAnhVu_DuAn1.Entity;
 
 namespace VoAnhVu_DuAn1.Model
 {
@@ -13,11 +13,9 @@ namespace VoAnhVu_DuAn1.Model
         {
 
         }
-        #region Dbset
-        public DbSet<Role> Roles { get; set; }
-        public DbSet<User> Users { get; set; }
-        public DbSet<Subject> Subjects { get; set; }
-        public DbSet<VoAnhVu_DuAn1.Model.Announcement> Announcement { get; set; }
+        #region
+        public DbSet<RoleEntity> RoleEntities { get; set; }
+        public DbSet<UserEntity> UserEntities { get; set; }
         #endregion
     }
 }
