@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using VoAnhVu_DuAn1.Model;
+using VoAnhVu_DuAn1.Services;
 
 namespace VoAnhVu_DuAn1
 {
@@ -40,6 +41,7 @@ namespace VoAnhVu_DuAn1
             services.AddDbContext<MyDbContext>(options => {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
+            services.AddScoped<RoleService>();
 
         }
 
@@ -63,6 +65,7 @@ namespace VoAnhVu_DuAn1
             {
                 endpoints.MapControllers();
             });
+
         }
     }
 }

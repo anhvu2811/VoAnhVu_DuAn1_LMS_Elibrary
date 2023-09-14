@@ -27,7 +27,7 @@ namespace VoAnhVu_DuAn1.Controllers
             return Ok(role);
         }
         [HttpPost]
-        public IActionResult AddRole(Role role)
+        public IActionResult AddRole([FromBody] Role role)
         {
             _roleService.AddRole(role);
             return Ok();
@@ -46,7 +46,7 @@ namespace VoAnhVu_DuAn1.Controllers
             }
         }
         [HttpPut("id")]
-        public IActionResult UpdateRole(int id, Role updateRole)
+        public IActionResult UpdateRole(int id, [FromBody] Role updateRole)
         {
             try
             {

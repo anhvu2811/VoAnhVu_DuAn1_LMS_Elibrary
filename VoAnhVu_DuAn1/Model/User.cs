@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace VoAnhVu_DuAn1.Model
 {
+    [Table("User")]
     public class User
     {
         [Key]
