@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -23,7 +24,7 @@ namespace VoAnhVu_DuAn1.Repository
             _context = context;
         }
 
-        public void createUser(UserEntity user)
+        public void createUser([FromBody] UserEntity user)
         {
             try
             {
@@ -45,7 +46,7 @@ namespace VoAnhVu_DuAn1.Repository
                 {
                     return false;
                 }
-                _context.UserEntities.Remove(id);
+                _context.UserEntities.Remove(user);
                 _context.SaveChanges();
                 return true;
             }

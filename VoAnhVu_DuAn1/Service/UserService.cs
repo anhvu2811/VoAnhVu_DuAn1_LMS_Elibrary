@@ -54,13 +54,7 @@ namespace VoAnhVu_DuAn1.Service
             return _userRepository.getAllUser().Where(c =>
                 c.UserId.IndexOf(key, StringComparison.OrdinalIgnoreCase) >= 0 ||
                 c.FullName.IndexOf(key, StringComparison.OrdinalIgnoreCase) >= 0 ||
-                c.Gender.IndexOf(key, StringComparison.OrdinalIgnoreCase) >= 0 ||
-                c.Email.IndexOf(key, StringComparison.OrdinalIgnoreCase) >= 0 ||
-                c.Phone.IndexOf(key, StringComparison.OrdinalIgnoreCase) >= 0 ||
-                c.Address.IndexOf(key, StringComparison.OrdinalIgnoreCase) >= 0 ||
-                c.Username.IndexOf(key, StringComparison.OrdinalIgnoreCase) >= 0 ||
-                c.Password.IndexOf(key, StringComparison.OrdinalIgnoreCase) >= 0 ||
-                c.RoleId.IndexOf(key, StringComparison.OrdinalIgnoreCase) >= 0
+                c.Gender.IndexOf(key, StringComparison.OrdinalIgnoreCase) >= 0
             ).ToList();
         }
 

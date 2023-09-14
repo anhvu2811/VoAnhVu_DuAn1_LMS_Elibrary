@@ -9,7 +9,7 @@ using VoAnhVu_DuAn1.Model;
 namespace VoAnhVu_DuAn1.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20230914175254_AddTblRole-User")]
+    [Migration("20230914192249_AddTblRole-User")]
     partial class AddTblRoleUser
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

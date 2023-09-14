@@ -22,7 +22,7 @@ namespace VoAnhVu_DuAn1.Entity
         public string Password { get; set; }
 
         [ForeignKey("RoleId")]
-        public string RoleId { get; set; }
-        public virtual RoleEntity Role { get; set; }
+        public string? RoleId { get; set; }
+        public virtual RoleEntity? Role { get; set; }
     }
 }

@@ -82,7 +82,7 @@ namespace VoAnhVu_DuAn1.Controllers
                 var kt = _userService.getAllUser().Where(c => c.UserId == user.UserId);
                 if (kt.Any())
                 {
-                    return BadRequest("Id này đã tồn tại ! Hãy nhập mã khác.")
+                    return BadRequest("Id này đã tồn tại ! Hãy nhập mã khác.");
                 }
                 UserEntity userEntity = new UserEntity
                 {
@@ -141,9 +141,9 @@ namespace VoAnhVu_DuAn1.Controllers
                 var user = _userService.deleteUser(id);
                 if (!user)
                 {
-                    return BadRequest("Không tìm thấy người dùng để xóa.")
+                    return BadRequest("Không tìm thấy người dùng để xóa.");
                 }
-                return Ok("Xóa thành công.");
+                return Ok("Xóa thành công."); 
             }
             catch (Exception ex)
             {
