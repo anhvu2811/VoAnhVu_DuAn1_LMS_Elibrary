@@ -1,8 +1,13 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using VoAnhVu_DuAn1.Entity;
 using VoAnhVu_DuAn1.Model;
@@ -15,12 +20,37 @@ namespace VoAnhVu_DuAn1.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
-        public UserController(IUserService userService)
+        private readonly AuthenticationService _authenticationService;
+
+        public UserController(IUserService userService, AuthenticationService authenticationService)
         {
             _userService = userService;
+            _authenticationService = authenticationService;
         }
+
+        [HttpPost]
+        [Route("/api/[Controller]/login")]
+        public IActionResult Login([FromBody] LoginModel model)
+        {
+            var user = _userService.GetUserByUsernameAndPassword(model.Username, model.Password);
+            if (user == null)
+            {
+                return Ok(new ApiResponse
+                {
+                    Success = false,
+                    Message = "Invalid username/password"
+                });
+            }
+            return Ok(new ApiResponse
+            {
+                Success = true,
+                Message = "Authenticate success",
+                Data = _authenticationService.GenerateToken(user)
+            });
+        }
+
         [HttpGet]
-        [Route("/api/[Controller]/get-all-user")]
+        [Route("/api/[Controller]/get-all-users")]
         public IActionResult getAllUser()
         {
             try
@@ -122,7 +152,7 @@ namespace VoAnhVu_DuAn1.Controllers
                     Address = user.Address,
                     Username = user.Username,
                     Password = user.Password,
-                    RoleId = user.RoleId,
+                    RoleId = user.RoleId
                 };
                 _userService.updateUser(userEntity);
                 return Ok(userEntity);

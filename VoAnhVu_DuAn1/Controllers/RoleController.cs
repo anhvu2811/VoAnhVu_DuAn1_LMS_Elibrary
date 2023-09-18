@@ -37,42 +37,7 @@ namespace VoAnhVu_DuAn1.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpGet]
-        [Route("/api/[Controller]/get-role-by-id")]
-        public IActionResult getRoleById(string id)
-        {
-            try
-            {
-                var role = _roleService.getRoleById(id);
-                if (role is null)
-                {
-                    return BadRequest("Không có vai trò.");
-                }
-                return Ok(role);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-        [HttpGet]
-        [Route("/api/[Controller]/search-role")]
-        public IActionResult searchRole(string key)
-        {
-            try
-            {
-                var role = _roleService.searchRole(key).ToList();
-                if (!role.Any())
-                {
-                    return BadRequest("Không tìm thấy vai trò.");
-                }
-                return Ok(role);
-            }
-            catch(Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
+        
         [HttpPost]
         [Route("/api/[Controller]/create-role")]
         public IActionResult createRole(RoleModel role)
@@ -136,5 +101,42 @@ namespace VoAnhVu_DuAn1.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        //[HttpGet]
+        //[Route("/api/[Controller]/get-role-by-id")]
+        //public IActionResult getRoleById(string id)
+        //{
+        //    try
+        //    {
+        //        var role = _roleService.getRoleById(id);
+        //        if (role is null)
+        //        {
+        //            return BadRequest("Không có vai trò.");
+        //        }
+        //        return Ok(role);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest(ex.Message);
+        //    }
+        //}
+        //[HttpGet]
+        //[Route("/api/[Controller]/search-role")]
+        //public IActionResult searchRole(string key)
+        //{
+        //    try
+        //    {
+        //        var role = _roleService.searchRole(key).ToList();
+        //        if (!role.Any())
+        //        {
+        //            return BadRequest("Không tìm thấy vai trò.");
+        //        }
+        //        return Ok(role);
+        //    }
+        //    catch(Exception ex)
+        //    {
+        //        return BadRequest(ex.Message);
+        //    }
+        //}
     }
 }

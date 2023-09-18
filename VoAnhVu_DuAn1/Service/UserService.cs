@@ -3,18 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using VoAnhVu_DuAn1.Entity;
+using VoAnhVu_DuAn1.Model;
 using VoAnhVu_DuAn1.Repository;
 
 namespace VoAnhVu_DuAn1.Service
 {
     public interface IUserService
     {
-        List<UserEntity> getAllUser();
-        List<UserEntity> searchUser(string key);
-        UserEntity getUserById(string id);
+        List<UserModel> getAllUser();
+        List<UserModel> searchUser(string key);
+        UserModel getUserById(string id);
         void createUser(UserEntity user);
         void updateUser(UserEntity user);
         bool deleteUser(string id);
+        UserEntity GetUserByUsernameAndPassword(string username, string password);
     }
     public class UserService : IUserService
     {
@@ -39,17 +41,17 @@ namespace VoAnhVu_DuAn1.Service
             return true;
         }
 
-        public UserEntity getUserById(string id)
+        public UserModel getUserById(string id)
         {
             return _userRepository.getUserById(id);
         }
 
-        public List<UserEntity> getAllUser()
+        public List<UserModel> getAllUser()
         {
             return _userRepository.getAllUser().ToList();
         }
 
-        public List<UserEntity> searchUser(string key)
+        public List<UserModel> searchUser(string key)
         {
             return _userRepository.getAllUser().Where(c =>
                 c.UserId.IndexOf(key, StringComparison.OrdinalIgnoreCase) >= 0 ||
@@ -61,6 +63,11 @@ namespace VoAnhVu_DuAn1.Service
         public void updateUser(UserEntity user)
         {
             _userRepository.updateUser(user);
+        }
+
+        public UserEntity GetUserByUsernameAndPassword(string username, string password)
+        {
+            return _userRepository.GetUserByUsernameAndPassword(username, password);
         }
     }
 }

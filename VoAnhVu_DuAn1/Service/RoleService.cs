@@ -43,6 +43,7 @@ namespace VoAnhVu_DuAn1.Service
         {
             return _roleRepository.getAllRole().ToList();
         }
+
         public List<RoleEntity> searchRole(string key)
         {
             return _roleRepository.getAllRole().Where(c =>

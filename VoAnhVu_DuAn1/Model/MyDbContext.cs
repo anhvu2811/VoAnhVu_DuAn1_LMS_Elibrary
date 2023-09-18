@@ -16,6 +16,8 @@ namespace VoAnhVu_DuAn1.Model
         #region
         public DbSet<RoleEntity> RoleEntities { get; set; }
         public DbSet<UserEntity> UserEntities { get; set; }
+        public DbSet<SubjectEntity> SubjectEntities { get; set; }
         #endregion
+
     }
 }
