@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VoAnhVu_DuAn1.Model;
 
 namespace VoAnhVu_DuAn1.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    partial class MyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230920150139_AddTblHelp")]
+    partial class AddTblHelp
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,30 +54,6 @@ namespace VoAnhVu_DuAn1.Migrations
                     b.HasKey("HelpId");
 
                     b.ToTable("Help");
-                });
-
-            modelBuilder.Entity("VoAnhVu_DuAn1.Entity.LectureEntity", b =>
-                {
-                    b.Property<string>("LectureId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("FileUpload")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SubjectId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Time")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("LectureId");
-
-                    b.HasIndex("SubjectId");
-
-                    b.ToTable("Lecture");
                 });
 
             modelBuilder.Entity("VoAnhVu_DuAn1.Entity.RoleEntity", b =>
@@ -161,15 +139,6 @@ namespace VoAnhVu_DuAn1.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("VoAnhVu_DuAn1.Entity.LectureEntity", b =>
-                {
-                    b.HasOne("VoAnhVu_DuAn1.Entity.SubjectEntity", "Subject")
-                        .WithMany("Lectures")
-                        .HasForeignKey("SubjectId");
-
-                    b.Navigation("Subject");
-                });
-
             modelBuilder.Entity("VoAnhVu_DuAn1.Entity.UserEntity", b =>
                 {
                     b.HasOne("VoAnhVu_DuAn1.Entity.RoleEntity", "Role")
@@ -187,8 +156,6 @@ namespace VoAnhVu_DuAn1.Migrations
             modelBuilder.Entity("VoAnhVu_DuAn1.Entity.SubjectEntity", b =>
                 {
                     b.Navigation("Enrollments");
-
-                    b.Navigation("Lectures");
                 });
 
             modelBuilder.Entity("VoAnhVu_DuAn1.Entity.UserEntity", b =>

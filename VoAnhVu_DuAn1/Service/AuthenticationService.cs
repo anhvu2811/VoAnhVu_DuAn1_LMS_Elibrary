@@ -36,10 +36,11 @@ namespace VoAnhVu_DuAn1.Service
                 new Claim(ClaimTypes.Email, user.Email),
                 new Claim("Username", user.Username),
                 new Claim("UserId", user.UserId),
+                new Claim("RoleId", user.RoleId),
 
                 new Claim("TokenId", Guid.NewGuid().ToString())
             }),
-                Expires = DateTime.UtcNow.AddMinutes(2),
+                Expires = DateTime.UtcNow.AddMinutes(60),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(secretKeyBytes), SecurityAlgorithms.HmacSha512Signature)
             };
 
