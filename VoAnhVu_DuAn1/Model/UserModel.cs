@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using VoAnhVu_DuAn1.Entity;
 
 namespace VoAnhVu_DuAn1.Model
 {
@@ -16,7 +17,7 @@ namespace VoAnhVu_DuAn1.Model
         public string Address { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
-        public string RoleId { get; set; }
-        public string RoleName { get; set; }
+        public RoleEntity Role { get; set; }
+    
     }
 }

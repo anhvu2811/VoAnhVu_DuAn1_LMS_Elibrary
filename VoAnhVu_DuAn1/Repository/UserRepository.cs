@@ -17,8 +17,9 @@ namespace VoAnhVu_DuAn1.Repository
         void updateUser(UserEntity user);
         bool deleteUser(string id);
         UserEntity GetUserByUsernameAndPassword(string username, string password);
+        void changePassword(string id, string oldPassword, string newPassword);
+        void updateAvatar(string id, string avatarUrl);
     }
-
     public class UserRepository : IUserRepository
     {
         private readonly MyDbContext _context;
@@ -26,7 +27,6 @@ namespace VoAnhVu_DuAn1.Repository
         {
             _context = context;
         }
-
         public void createUser([FromBody] UserEntity user)
         {
             try
@@ -39,7 +39,6 @@ namespace VoAnhVu_DuAn1.Repository
                 throw ex;
             }
         }
-
         public bool deleteUser(string id)
         {
             try
@@ -58,11 +57,10 @@ namespace VoAnhVu_DuAn1.Repository
                 throw ex;
             }
         }
-
         public List<UserModel> getAllUser()
         {
             var users = _context.UserEntities
-             .Include(user => user.Role) // Bao gồm thông tin từ bảng Role
+             .Include(user => user.Role) 
              .Select(user => new UserModel
              {
                  UserId = user.UserId,
@@ -73,14 +71,12 @@ namespace VoAnhVu_DuAn1.Repository
                  Phone = user.Phone,
                  Address = user.Address,
                  Username = user.Username,
-                 RoleName = user.Role != null ? user.Role.RoleName : "Unknown"
-                // Không bao gồm RoleId trong UserModel
+                 Password = user.Password,
+                 Role = user.Role
             })
              .ToList();
-
             return users;
         }
-
         public UserModel getUserById(string id)
         {
             var userEntity = _context.UserEntities.Include(user => user.Role).FirstOrDefault(c => c.UserId == id);
@@ -96,14 +92,13 @@ namespace VoAnhVu_DuAn1.Repository
                     Phone = userEntity.Phone,
                     Address = userEntity.Address,
                     Username = userEntity.Username,
-                    RoleName = userEntity.Role != null ? userEntity.Role.RoleName : "Unknown"
+                    Password = userEntity.Password,
+                    Role = userEntity.Role
                 };
-
                 return userModel;
             }
             return null; 
         }
-
         public void updateUser(UserEntity user)
         {
             try
@@ -116,10 +111,52 @@ namespace VoAnhVu_DuAn1.Repository
                 throw ex;
             }
         }
-
         public UserEntity GetUserByUsernameAndPassword(string username, string password)
         {
             return _context.UserEntities.SingleOrDefault(p => p.Username == username && p.Password == password);
+        }
+        public void changePassword(string userId, string oldPassword, string newPassword)
+        {
+            try
+            {
+                var user = _context.UserEntities.FirstOrDefault(c => c.UserId == userId);
+                if (user != null)
+                {
+                    if (user.Password == oldPassword)
+                    {
+                        user.Password = newPassword;
+                        _context.SaveChanges();
+                    }
+                    else
+                    {
+                        throw new Exception("Mật khẩu cũ không đúng.");
+                    }
+                }
+                else
+                {
+                    throw new Exception("Người dùng không tồn tại.");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public void updateAvatar(string id, string avatarUrl)
+        {
+            try
+            {
+                var user = _context.UserEntities.FirstOrDefault(u => u.UserId == id);
+                if(user != null)
+                {
+                    user.Avatar = avatarUrl;
+                    _context.SaveChanges();
+                }
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

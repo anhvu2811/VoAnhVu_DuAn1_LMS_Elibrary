@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
@@ -21,13 +24,14 @@ namespace VoAnhVu_DuAn1.Controllers
     {
         private readonly IUserService _userService;
         private readonly AuthenticationService _authenticationService;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public UserController(IUserService userService, AuthenticationService authenticationService)
+        public UserController(IUserService userService, AuthenticationService authenticationService, IWebHostEnvironment webHostEnvironment)
         {
             _userService = userService;
             _authenticationService = authenticationService;
+            _webHostEnvironment = webHostEnvironment;
         }
-
         [HttpPost]
         [Route("/api/[Controller]/login")]
         public IActionResult Login([FromBody] LoginModel model)
@@ -46,9 +50,8 @@ namespace VoAnhVu_DuAn1.Controllers
                 Success = true,
                 Message = "Authenticate success",
                 Data = _authenticationService.GenerateToken(user)
-            });
+            }); 
         }
-
         [HttpGet]
         [Route("/api/[Controller]/get-all-users")]
         public IActionResult getAllUser()
@@ -85,6 +88,7 @@ namespace VoAnhVu_DuAn1.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        [Authorize(Roles = "Lãnh đạo,Giáo viên")]
         [HttpGet]
         [Route("/api/[Controller]/search-user")]
         public IActionResult searchUser(string key)
@@ -125,7 +129,7 @@ namespace VoAnhVu_DuAn1.Controllers
                     Address = user.Address,
                     Username = user.Username,
                     Password = user.Password,
-                    RoleId = user.RoleId,
+                    RoleId = user.Role.RoleId,
                 };
                 _userService.createUser(userEntity);
                 return Ok(userEntity);
@@ -135,6 +139,7 @@ namespace VoAnhVu_DuAn1.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        [Authorize]
         [HttpPut]
         [Route("/api/[Controller]/update-user")]
         public IActionResult updateUser(UserModel user)
@@ -152,7 +157,7 @@ namespace VoAnhVu_DuAn1.Controllers
                     Address = user.Address,
                     Username = user.Username,
                     Password = user.Password,
-                    RoleId = user.RoleId
+                    RoleId = user.Role.RoleId
                 };
                 _userService.updateUser(userEntity);
                 return Ok(userEntity);
@@ -162,6 +167,7 @@ namespace VoAnhVu_DuAn1.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        [Authorize(Roles = "Lãnh đạo")]
         [HttpDelete]
         [Route("/api/[Controller]/delete-user")]
         public IActionResult deleteUser(string id)
@@ -174,6 +180,78 @@ namespace VoAnhVu_DuAn1.Controllers
                     return BadRequest("Không tìm thấy người dùng để xóa.");
                 }
                 return Ok("Xóa thành công."); 
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [Authorize]
+        [HttpPost]
+        [Route("/api/[Controller]/change-password")]
+        public IActionResult ChangePassword(string userId, string oldPassword, string newPassword)
+        {
+            try
+            {
+                _userService.changePassword(userId, oldPassword, newPassword);
+                return Ok("Mật khẩu đã được thay đổi thành công.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpPut]
+        [Route("/api/[Controller]/update-avatar")]
+        public IActionResult updateAvatar(string userId, [FromBody] string avatarUrl)
+        {
+            try
+            {
+                var user = _userService.getUserById(userId);
+                if (user == null)
+                {
+                    return NotFound("Người dùng không tồn tại.");
+                }
+                var imagePath = Path.Combine(_webHostEnvironment.ContentRootPath, "Image");
+                var uniqueFileName = Guid.NewGuid().ToString() + "_avatar.jpg";
+                var fullPath = Path.Combine(imagePath, uniqueFileName);
+                using (var fileStream = new FileStream(fullPath, FileMode.Create))
+                {
+                    
+                }
+                user.Avatar = "/Image/" + uniqueFileName;
+
+                _userService.updateAvatar(userId, avatarUrl);
+                return Ok("Đường dẫn ảnh đại diện đã được cập nhật.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Lỗi khi cập nhật đường dẫn ảnh đại diện: " + ex.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("/api/[Controller]/get-user-info")]
+        [Authorize] // Đảm bảo rằng người dùng đã xác thực bằng token
+        public IActionResult GetUserInfo()
+        {
+            try
+            {
+                // Lấy thông tin người dùng từ ClaimsPrincipal
+                var userId = User.FindFirst("UserId")?.Value; // Lấy ID người dùng từ token
+                var username = User.FindFirst(ClaimTypes.Name)?.Value; // Lấy tên người dùng từ token
+                var roleName = User.FindFirst("RoleName")?.Value; // Lấy quyền người dùng từ token
+
+                // Xử lý logic dựa trên thông tin người dùng
+                // Ví dụ: Trả về danh sách quyền của người dùng
+                var userRoles = new List<string> { roleName };
+
+                return Ok(new
+                {
+                    UserId = userId,
+                    Username = username,
+                    Roles = userRoles
+                });
             }
             catch (Exception ex)
             {

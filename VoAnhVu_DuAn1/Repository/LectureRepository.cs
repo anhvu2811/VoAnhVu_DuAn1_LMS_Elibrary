@@ -65,8 +65,7 @@ namespace VoAnhVu_DuAn1.Repository
                  Title = lecture.Title,
                  FileUpload = lecture.FileUpload,
                  Time = lecture.Time,
-                 SubjectName = lecture.Subject != null ? lecture.Subject.SubjectName : "Unknown"
-                 // Không bao gồm RoleId trong UserModel
+                 Subject = lecture.Subject 
              })
              .ToList();
 

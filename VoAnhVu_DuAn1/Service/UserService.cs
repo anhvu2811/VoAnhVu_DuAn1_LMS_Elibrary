@@ -17,6 +17,8 @@ namespace VoAnhVu_DuAn1.Service
         void updateUser(UserEntity user);
         bool deleteUser(string id);
         UserEntity GetUserByUsernameAndPassword(string username, string password);
+        void changePassword(string id, string oldPassword, string newPassword);
+        void updateAvatar(string id, string avatarUrl);
     }
     public class UserService : IUserService
     {
@@ -25,12 +27,10 @@ namespace VoAnhVu_DuAn1.Service
         {
             _userRepository = userRepository;
         }
-
         public void createUser(UserEntity user)
         {
             _userRepository.createUser(user);
         }
-
         public bool deleteUser(string id)
         {
             bool user = _userRepository.deleteUser(id);
@@ -40,17 +40,14 @@ namespace VoAnhVu_DuAn1.Service
             }
             return true;
         }
-
         public UserModel getUserById(string id)
         {
             return _userRepository.getUserById(id);
         }
-
         public List<UserModel> getAllUser()
         {
             return _userRepository.getAllUser().ToList();
         }
-
         public List<UserModel> searchUser(string key)
         {
             return _userRepository.getAllUser().Where(c =>
@@ -59,15 +56,35 @@ namespace VoAnhVu_DuAn1.Service
                 c.Gender.IndexOf(key, StringComparison.OrdinalIgnoreCase) >= 0
             ).ToList();
         }
-
         public void updateUser(UserEntity user)
         {
             _userRepository.updateUser(user);
         }
-
         public UserEntity GetUserByUsernameAndPassword(string username, string password)
         {
             return _userRepository.GetUserByUsernameAndPassword(username, password);
+        }
+        public void changePassword(string userId, string oldPassword, string newPassword)
+        {
+            try
+            {
+                _userRepository.changePassword(userId, oldPassword, newPassword);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public void updateAvatar(string id, string avatarUrl)
+        {
+            try
+            {
+                _userRepository.updateAvatar(id, avatarUrl);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

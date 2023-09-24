@@ -24,7 +24,7 @@ namespace VoAnhVu_DuAn1.Entity
         [ForeignKey("RoleId")]
         public string? RoleId { get; set; }
 
-        public virtual RoleEntity? Role { get; set; }
-        public virtual ICollection<EnrollmentEntity> Enrollments { get; set; }
+        public RoleEntity? Role { get; set; }
+        //public virtual ICollection<EnrollmentEntity> Enrollments { get; set; }
     }
 }

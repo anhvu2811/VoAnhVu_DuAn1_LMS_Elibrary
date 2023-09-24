@@ -15,6 +15,6 @@ namespace VoAnhVu_DuAn1.Entity
         public string RoleName { get; set; }
         public string Decription { get; set; }
 
-        public virtual ICollection<UserEntity> Users { get; set; }
+        //public virtual ICollection<UserEntity> Users { get; set; }
     }
 }

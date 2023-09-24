@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,9 +11,9 @@ namespace VoAnhVu_DuAn1.Repository
 {
     public interface IEnrollmentRepository
     {
-        List<EnrollmentEntity> getAllEnrollment();
+        List<EnrollmentModel> getAllEnrollment();
         void createEnrollment(EnrollmentEntity enrollment);
-        void updateEnrollment(EnrollmentEntity enrolment);
+        void updateEnrollment(EnrollmentEntity enrollment);
         bool deleteEnrollment(string id);
     }
     public class EnrollmentRepository : IEnrollmentRepository
@@ -22,24 +24,64 @@ namespace VoAnhVu_DuAn1.Repository
             _context = context;
         }
 
-        public void createEnrollment(EnrollmentEntity enrollment)
+        public void createEnrollment([FromBody] EnrollmentEntity enrollment)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _context.EnrollmentEntities.Add(enrollment);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public bool deleteEnrollment(string id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var enrollment = _context.EnrollmentEntities.FirstOrDefault(c => c.EnrollmentId == id);
+                if (enrollment is null)
+                {
+                    return false;
+                }
+                _context.EnrollmentEntities.Remove(enrollment);
+                _context.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
-        public List<EnrollmentEntity> getAllEnrollment()
+        public List<EnrollmentModel> getAllEnrollment()
         {
-            throw new NotImplementedException();
+            var enrollments = _context.EnrollmentEntities
+              .Include(enrollment => enrollment.User)
+              .Include(enrollment => enrollment.Subject)
+              .Select(enroment => new EnrollmentModel
+              {
+                  EnrollmentId = enroment.EnrollmentId,
+                  User = enroment.User,
+                  Subject = enroment.Subject
+              })
+              .ToList();
+            return enrollments;
         }
 
-        public void updateEnrollment(EnrollmentEntity enrolment)
+        public void updateEnrollment(EnrollmentEntity enrollment)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _context.EnrollmentEntities.Update(enrollment);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

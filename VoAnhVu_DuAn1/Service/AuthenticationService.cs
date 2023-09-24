@@ -34,9 +34,11 @@ namespace VoAnhVu_DuAn1.Service
                 Subject = new ClaimsIdentity(new[] {
                 new Claim(ClaimTypes.Name, user.FullName),
                 new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.Role, user.Role.RoleName),
                 new Claim("Username", user.Username),
                 new Claim("UserId", user.UserId),
-                new Claim("RoleId", user.RoleId),
+                //new Claim("RoleId", user.RoleId),
+                //new Claim("RoleName", roleName),
 
                 new Claim("TokenId", Guid.NewGuid().ToString())
             }),

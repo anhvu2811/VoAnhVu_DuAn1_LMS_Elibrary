@@ -54,7 +54,7 @@ namespace VoAnhVu_DuAn1.Controllers
                     Title = lecture.Title,
                     FileUpload = lecture.FileUpload,
                     Time = lecture.Time,
-                    SubjectId = lecture.SubjectId,
+                    SubjectId = lecture.Subject.SubjectId,
                 };
                 _lectureService.createLecture(lectureEntity);
                 return Ok(lectureEntity);
@@ -76,7 +76,7 @@ namespace VoAnhVu_DuAn1.Controllers
                     Title = lecture.Title,
                     FileUpload = lecture.FileUpload,
                     Time = lecture.Time,
-                    SubjectId = lecture.SubjectId
+                    SubjectId = lecture.Subject.SubjectId
                 };
                 _lectureService.updateLecture(lectureEntity);
                 return Ok(lectureEntity);

@@ -33,11 +33,37 @@ namespace VoAnhVu_DuAn1
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "VoAnhVu_DuAn1", Version = "v1" });
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Description = @"JWT Authorization header using the Bearer scheme. \r\n\r\n
+                      Enter 'Bearer' [space] and then your token in the text input below.
+                      \r\n\r\nExample: 'Bearer 12345abcdef'",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer"
+                });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+                  {
+                    {
+                      new OpenApiSecurityScheme
+                      {
+                        Reference = new OpenApiReference
+                          {
+                            Type = ReferenceType.SecurityScheme,
+                            Id = "Bearer"
+                          },
+                          Scheme = "oauth2",
+                          Name = "Bearer",
+                          In = ParameterLocation.Header,
+                        },
+                        new List<string>()
+                      }
+                    });
             });
            
             services.AddCors(options => options.AddDefaultPolicy(policy => policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
@@ -50,6 +76,9 @@ namespace VoAnhVu_DuAn1
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
+
+            services.AddScoped<IEnrollmentRepository, EnrollmentRepository>();
+            services.AddScoped<IEnrollmentService, EnrollmentService>();
 
             services.AddScoped<ISubjectRepository, SubjectRepository>();
             services.AddScoped<ISubjectService, SubjectService>();
@@ -81,6 +110,13 @@ namespace VoAnhVu_DuAn1
 
                     ClockSkew = TimeSpan.Zero
                 };
+            });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("StudentPolicy", policy => policy.RequireRole("Sinh viên"));
+                options.AddPolicy("TeacherPolicy", policy => policy.RequireRole("Giáo viên"));
+                options.AddPolicy("LeaderShipPolicy", policy => policy.RequireRole("Lãnh đạo"));
             });
 
         }
