@@ -18,6 +18,7 @@ namespace VoAnhVu_DuAn1.Service
         bool deleteUser(string id);
         UserEntity GetUserByUsernameAndPassword(string username, string password);
         void changePassword(string id, string oldPassword, string newPassword);
+        string getRoleNameByUserId(string id);
         void updateAvatar(string id, string avatarUrl);
     }
     public class UserService : IUserService
@@ -85,6 +86,11 @@ namespace VoAnhVu_DuAn1.Service
             {
                 throw ex;
             }
+        }
+        public string getRoleNameByUserId(string id)
+        {
+            // Gọi phương thức từ IUserRepository để lấy RoleName
+            return _userRepository.getRoleNameByUserId(id);
         }
     }
 }

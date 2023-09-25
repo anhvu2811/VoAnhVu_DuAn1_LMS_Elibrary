@@ -18,6 +18,7 @@ namespace VoAnhVu_DuAn1.Repository
         bool deleteUser(string id);
         UserEntity GetUserByUsernameAndPassword(string username, string password);
         void changePassword(string id, string oldPassword, string newPassword);
+        string getRoleNameByUserId(string id);
         void updateAvatar(string id, string avatarUrl);
     }
     public class UserRepository : IUserRepository
@@ -157,6 +158,16 @@ namespace VoAnhVu_DuAn1.Repository
             {
                 throw ex;
             }
+        }
+        public string getRoleNameByUserId(string id)
+        {
+            // Sử dụng LINQ để lấy roleName từ cơ sở dữ liệu
+            var roleName = _context.UserEntities
+                .Where(u => u.UserId == id)
+                .Select(u => u.Role.RoleName)
+                .FirstOrDefault();
+
+            return roleName;
         }
     }
 }

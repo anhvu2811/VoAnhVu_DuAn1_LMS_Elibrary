@@ -45,11 +45,13 @@ namespace VoAnhVu_DuAn1.Controllers
                     Message = "Invalid username/password"
                 });
             }
+            var userId = user.UserId;
+            var roleName = _userService.getRoleNameByUserId(userId);
             return Ok(new ApiResponse
             {
                 Success = true,
                 Message = "Authenticate success",
-                Data = _authenticationService.GenerateToken(user)
+                Data = _authenticationService.GenerateToken(user, roleName)
             }); 
         }
         [HttpGet]
@@ -88,7 +90,7 @@ namespace VoAnhVu_DuAn1.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [Authorize(Roles = "Lãnh đạo,Giáo viên")]
+        [Authorize(Roles = "Giáo viên, Lãnh đạo")]
         [HttpGet]
         [Route("/api/[Controller]/search-user")]
         public IActionResult searchUser(string key)
@@ -241,7 +243,6 @@ namespace VoAnhVu_DuAn1.Controllers
                 var userId = User.FindFirst("UserId")?.Value; // Lấy ID người dùng từ token
                 var username = User.FindFirst(ClaimTypes.Name)?.Value; // Lấy tên người dùng từ token
                 var roleName = User.FindFirst("RoleName")?.Value; // Lấy quyền người dùng từ token
-
                 // Xử lý logic dựa trên thông tin người dùng
                 // Ví dụ: Trả về danh sách quyền của người dùng
                 var userRoles = new List<string> { roleName };

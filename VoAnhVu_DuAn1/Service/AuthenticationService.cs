@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -12,7 +13,7 @@ namespace VoAnhVu_DuAn1.Service
 {
     public interface IAuthenticationService
     {
-        string GenerateToken(UserEntity user);
+        string GenerateToken(UserEntity user, string roleName);
     }
 
     public class AuthenticationService : IAuthenticationService
@@ -24,7 +25,7 @@ namespace VoAnhVu_DuAn1.Service
             _appSettings = appSettings.Value;
         }
 
-        public string GenerateToken(UserEntity user)
+        public string GenerateToken(UserEntity user, string roleName)
         {
             var jwtTokenHandler = new JwtSecurityTokenHandler();
             var secretKeyBytes = Encoding.UTF8.GetBytes(_appSettings.SecretKey);
@@ -34,11 +35,9 @@ namespace VoAnhVu_DuAn1.Service
                 Subject = new ClaimsIdentity(new[] {
                 new Claim(ClaimTypes.Name, user.FullName),
                 new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Role, user.Role.RoleName),
+                new Claim(ClaimTypes.Role, roleName),
                 new Claim("Username", user.Username),
                 new Claim("UserId", user.UserId),
-                //new Claim("RoleId", user.RoleId),
-                //new Claim("RoleName", roleName),
 
                 new Claim("TokenId", Guid.NewGuid().ToString())
             }),

@@ -22,6 +22,7 @@ namespace VoAnhVu_DuAn1.Controllers
             _helpService = helpService;
         }
         [HttpGet]
+        [Authorize(Roles = "Lãnh đạo")]
         [Route("/api/[Controller]/get-all-help")]
         public IActionResult getAllHelp()
         {
@@ -64,26 +65,27 @@ namespace VoAnhVu_DuAn1.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpPut]
-        [Route("/api/[Controller]/update-help")]
-        public IActionResult updateHelp(HelpModel help)
-        {
-            try
-            {
-                HelpEntity helpEntity = new HelpEntity
-                {
-                    HelpId = help.HelpId,
-                    Title = help.Title,
-                    Content = help.Content
-                };
-                _helpService.updateHelp(helpEntity);
-                return Ok(helpEntity);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
+        //[HttpPut]
+        //[Route("/api/[Controller]/update-help")]
+        //public IActionResult updateHelp(HelpModel help)
+        //{
+        //    try
+        //    {
+        //        HelpEntity helpEntity = new HelpEntity
+        //        {
+        //            HelpId = help.HelpId,
+        //            Title = help.Title,
+        //            Content = help.Content
+        //        };
+        //        _helpService.updateHelp(helpEntity);
+        //        return Ok(helpEntity);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest(ex.Message);
+        //    }
+        //}
+        [Authorize(Roles = "Lãnh đạo")]
         [HttpDelete]
         [Route("/api/[Controller]/delete-help")]
         public IActionResult deleteHelp(string id)
