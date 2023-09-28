@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using VoAnhVu_DuAn1.Entity;
+using VoAnhVu_DuAn1.Model;
 using VoAnhVu_DuAn1.Repository;
 
 namespace VoAnhVu_DuAn1.Service
 {
     public interface ISubjectService
     {
-        List<SubjectEntity> getAllSubject();
-        List<SubjectEntity> searchSubject(string key);
-        List<SubjectEntity> sortSubject(string sortBy, bool ascending);
+        List<SubjectModel> getAllSubject();
+        List<SubjectModel> searchSubject(string key);
+        List<SubjectModel> sortSubject(string sortBy, bool ascending);
         SubjectEntity getSubjectById(string id);
         void createSubject(SubjectEntity subject);
         void updateSubject(SubjectEntity subject);
@@ -40,12 +41,12 @@ namespace VoAnhVu_DuAn1.Service
             return true;
         }
 
-        public List<SubjectEntity> getAllSubject()
+        public List<SubjectModel> getAllSubject()
         {
             return _subjectRepository.getAllSubject().ToList();
         }
 
-        public List<SubjectEntity> searchSubject(string key)
+        public List<SubjectModel> searchSubject(string key)
         {
             return _subjectRepository.getAllSubject().Where(c => c.SubjectName.IndexOf(key, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
         }
@@ -55,7 +56,7 @@ namespace VoAnhVu_DuAn1.Service
             _subjectRepository.updateSubject(subject);
         }
 
-        public List<SubjectEntity> sortSubject(string sortBy, bool ascending)
+        public List<SubjectModel> sortSubject(string sortBy, bool ascending)
         {
             var subject = _subjectRepository.getAllSubject();
             switch (sortBy.ToLower())

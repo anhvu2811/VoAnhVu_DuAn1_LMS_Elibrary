@@ -103,6 +103,7 @@ namespace VoAnhVu_DuAn1.Controllers
                 {
                     SubjectId = subject.SubjectId,
                     SubjectName = subject.SubjectName,
+                    TopicId = subject.Topic.TopicId,
                 };
                 _subjectService.createSubject(subjectEntity);
                 return Ok(subjectEntity);
@@ -122,6 +123,7 @@ namespace VoAnhVu_DuAn1.Controllers
                 {
                     SubjectId = subject.SubjectId,
                     SubjectName = subject.SubjectName,
+                    TopicId = subject.Topic.TopicId,
                 };
                 _subjectService.updateSubject(subjectEntity);
                 return Ok(subjectEntity);

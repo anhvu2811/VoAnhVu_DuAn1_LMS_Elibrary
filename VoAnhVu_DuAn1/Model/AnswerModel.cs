@@ -6,10 +6,10 @@ using VoAnhVu_DuAn1.Entity;
 
 namespace VoAnhVu_DuAn1.Model
 {
-    public class SubjectModel
+    public class AnswerModel
     {
-        public string SubjectId { get; set; }
-        public string SubjectName { get; set; }
-        public TopicEntity Topic { get; set; }
+        public string AnswerId { get; set; }
+        public string AnswerText { get; set; }
+        public QuestionEntity Question { get; set; }
     }
 }

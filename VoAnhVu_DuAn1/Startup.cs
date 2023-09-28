@@ -89,6 +89,15 @@ namespace VoAnhVu_DuAn1
             services.AddScoped<ILectureRepository, LectureRepository>();
             services.AddScoped<ILectureService, LectureService>();
 
+            services.AddScoped<ITopicRepository, TopicRepository>();
+            services.AddScoped<ITopicService, TopicService>();
+
+            services.AddScoped<IQuestionRepository, QuestionRepository>();
+            services.AddScoped<IQuestionService, QuestionService>();
+
+            services.AddScoped<IAnswerRepository, AnswerRepository>();
+            services.AddScoped<IAnswerService, AnswerService>();
+
             services.AddScoped<AuthenticationService>();
 
             services.Configure<AppSetting>(Configuration.GetSection("AppSettings"));

@@ -17,6 +17,6 @@ namespace VoAnhVu_DuAn1.Entity
         public string Time { get; set; }
         [ForeignKey("SubjectId")]
         public string? SubjectId { get; set; }
-        public virtual SubjectEntity Subject { get; set; }
+        public SubjectEntity Subject { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace VoAnhVu_DuAn1.Repository
 {
     public interface ISubjectRepository
     {
-        List<SubjectEntity> getAllSubject();
+        List<SubjectModel> getAllSubject();
         SubjectEntity getSubjectById(string id);
         void createSubject(SubjectEntity subject);
         void updateSubject(SubjectEntity subject);
@@ -56,9 +57,17 @@ namespace VoAnhVu_DuAn1.Repository
             }
         }
 
-        public List<SubjectEntity> getAllSubject()
+        public List<SubjectModel> getAllSubject()
         {
-            return _context.SubjectEntities.ToList();
+            var subjects = _context.SubjectEntities
+             .Include(subject => subject.Topic)
+             .Select(subject => new SubjectModel
+             {
+                 SubjectId = subject.SubjectId,
+                 SubjectName = subject.SubjectName,
+                 Topic = subject.Topic
+             }).ToList();
+            return subjects;
         }
 
         public SubjectEntity getSubjectById(string id)

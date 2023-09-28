@@ -13,7 +13,7 @@ namespace VoAnhVu_DuAn1.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Lãnh đạo")]
+    //[Authorize(Roles = "Lãnh đạo")]
     public class RoleController : ControllerBase
     {
         private readonly IRoleService _roleService;

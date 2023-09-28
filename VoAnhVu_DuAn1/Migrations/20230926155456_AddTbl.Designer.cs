@@ -9,8 +9,8 @@ using VoAnhVu_DuAn1.Model;
 namespace VoAnhVu_DuAn1.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20230915072240_AddTblSubject-Enrollment")]
-    partial class AddTblSubjectEnrollment
+    [Migration("20230926155456_AddTbl")]
+    partial class AddTbl
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -40,6 +40,46 @@ namespace VoAnhVu_DuAn1.Migrations
                     b.ToTable("Enrollment");
                 });
 
+            modelBuilder.Entity("VoAnhVu_DuAn1.Entity.HelpEntity", b =>
+                {
+                    b.Property<string>("HelpId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("HelpId");
+
+                    b.ToTable("Help");
+                });
+
+            modelBuilder.Entity("VoAnhVu_DuAn1.Entity.LectureEntity", b =>
+                {
+                    b.Property<string>("LectureId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("FileUpload")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SubjectId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Time")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("LectureId");
+
+                    b.HasIndex("SubjectId");
+
+                    b.ToTable("Lecture");
+                });
+
             modelBuilder.Entity("VoAnhVu_DuAn1.Entity.RoleEntity", b =>
                 {
                     b.Property<string>("RoleId")
@@ -64,9 +104,30 @@ namespace VoAnhVu_DuAn1.Migrations
                     b.Property<string>("SubjectName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("TopicId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("SubjectId");
 
+                    b.HasIndex("TopicId");
+
                     b.ToTable("Subject");
+                });
+
+            modelBuilder.Entity("VoAnhVu_DuAn1.Entity.TopicEntity", b =>
+                {
+                    b.Property<string>("TopicId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TopicName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("TopicId");
+
+                    b.ToTable("Topic");
                 });
 
             modelBuilder.Entity("VoAnhVu_DuAn1.Entity.UserEntity", b =>
@@ -111,11 +172,11 @@ namespace VoAnhVu_DuAn1.Migrations
             modelBuilder.Entity("VoAnhVu_DuAn1.Entity.EnrollmentEntity", b =>
                 {
                     b.HasOne("VoAnhVu_DuAn1.Entity.SubjectEntity", "Subject")
-                        .WithMany("Enrollments")
+                        .WithMany()
                         .HasForeignKey("SubjectId");
 
                     b.HasOne("VoAnhVu_DuAn1.Entity.UserEntity", "User")
-                        .WithMany("Enrollments")
+                        .WithMany()
                         .HasForeignKey("UserId");
 
                     b.Navigation("Subject");
@@ -123,28 +184,31 @@ namespace VoAnhVu_DuAn1.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("VoAnhVu_DuAn1.Entity.UserEntity", b =>
+            modelBuilder.Entity("VoAnhVu_DuAn1.Entity.LectureEntity", b =>
                 {
-                    b.HasOne("VoAnhVu_DuAn1.Entity.RoleEntity", "Role")
-                        .WithMany("Users")
-                        .HasForeignKey("RoleId");
+                    b.HasOne("VoAnhVu_DuAn1.Entity.SubjectEntity", "Subject")
+                        .WithMany()
+                        .HasForeignKey("SubjectId");
 
-                    b.Navigation("Role");
-                });
-
-            modelBuilder.Entity("VoAnhVu_DuAn1.Entity.RoleEntity", b =>
-                {
-                    b.Navigation("Users");
+                    b.Navigation("Subject");
                 });
 
             modelBuilder.Entity("VoAnhVu_DuAn1.Entity.SubjectEntity", b =>
                 {
-                    b.Navigation("Enrollments");
+                    b.HasOne("VoAnhVu_DuAn1.Entity.TopicEntity", "Topic")
+                        .WithMany()
+                        .HasForeignKey("TopicId");
+
+                    b.Navigation("Topic");
                 });
 
             modelBuilder.Entity("VoAnhVu_DuAn1.Entity.UserEntity", b =>
                 {
-                    b.Navigation("Enrollments");
+                    b.HasOne("VoAnhVu_DuAn1.Entity.RoleEntity", "Role")
+                        .WithMany()
+                        .HasForeignKey("RoleId");
+
+                    b.Navigation("Role");
                 });
 #pragma warning restore 612, 618
         }

@@ -20,6 +20,9 @@ namespace VoAnhVu_DuAn1.Model
         public DbSet<SubjectEntity> SubjectEntities { get; set; }
         public DbSet<HelpEntity> HelpEntities { get; set; }
         public DbSet<LectureEntity> LectureEntities { get; set; }
+        public DbSet<TopicEntity> TopicEntities { get; set; }
+        public DbSet<QuestionEntity> QuestionEntities { get; set; }
+        public DbSet<AnswerEntity> AnswerEntities { get; set; }
         #endregion
 
     }

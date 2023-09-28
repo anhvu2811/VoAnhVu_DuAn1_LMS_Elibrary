@@ -74,8 +74,7 @@ namespace VoAnhVu_DuAn1.Repository
                  Username = user.Username,
                  Password = user.Password,
                  Role = user.Role
-            })
-             .ToList();
+            }).ToList();
             return users;
         }
         public UserModel getUserById(string id)
