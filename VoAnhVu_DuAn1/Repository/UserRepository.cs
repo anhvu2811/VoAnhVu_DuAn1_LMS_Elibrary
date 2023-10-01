@@ -20,6 +20,7 @@ namespace VoAnhVu_DuAn1.Repository
         void changePassword(string id, string oldPassword, string newPassword);
         string getRoleNameByUserId(string id);
         void updateAvatar(string id, string avatarUrl);
+        void deleteAvatar(string id);
     }
     public class UserRepository : IUserRepository
     {
@@ -158,14 +159,29 @@ namespace VoAnhVu_DuAn1.Repository
                 throw ex;
             }
         }
+        public void deleteAvatar(string id)
+        {
+            try
+            {
+                var user = _context.UserEntities.FirstOrDefault(u => u.UserId == id);
+                if (user != null)
+                {
+                    user.Avatar = null; 
+                    _context.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public string getRoleNameByUserId(string id)
         {
-            // Sử dụng LINQ để lấy roleName từ cơ sở dữ liệu
             var roleName = _context.UserEntities
                 .Where(u => u.UserId == id)
                 .Select(u => u.Role.RoleName)
                 .FirstOrDefault();
-
             return roleName;
         }
     }

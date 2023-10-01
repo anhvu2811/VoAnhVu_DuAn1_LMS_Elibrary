@@ -203,9 +203,9 @@ namespace VoAnhVu_DuAn1.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpPut]
+        [HttpPost]
         [Route("/api/[Controller]/update-avatar")]
-        public IActionResult updateAvatar(string userId, [FromBody] string avatarUrl)
+        public IActionResult UpdateAvatar(string userId, IFormFile avatarFile)
         {
             try
             {
@@ -214,16 +214,24 @@ namespace VoAnhVu_DuAn1.Controllers
                 {
                     return NotFound("Người dùng không tồn tại.");
                 }
-                var imagePath = Path.Combine(_webHostEnvironment.ContentRootPath, "Image");
+
+                if (avatarFile == null || avatarFile.Length == 0)
+                {
+                    return BadRequest("Vui lòng chọn tệp ảnh.");
+                }
+
+                var imagePath = Path.Combine(_webHostEnvironment.ContentRootPath, "Images");
                 var uniqueFileName = Guid.NewGuid().ToString() + "_avatar.jpg";
                 var fullPath = Path.Combine(imagePath, uniqueFileName);
+
                 using (var fileStream = new FileStream(fullPath, FileMode.Create))
                 {
-                    
+                    avatarFile.CopyTo(fileStream);
                 }
-                user.Avatar = "/Image/" + uniqueFileName;
 
-                _userService.updateAvatar(userId, avatarUrl);
+                user.Avatar = "/Images/" + uniqueFileName;
+
+                _userService.updateAvatar(userId, user.Avatar);
                 return Ok("Đường dẫn ảnh đại diện đã được cập nhật.");
             }
             catch (Exception ex)
@@ -231,10 +239,24 @@ namespace VoAnhVu_DuAn1.Controllers
                 return BadRequest("Lỗi khi cập nhật đường dẫn ảnh đại diện: " + ex.Message);
             }
         }
+        [HttpDelete("delete-avatar")]
+        public IActionResult DeleteAvatar(string userId)
+        {
+            try
+            {
+                _userService.deleteAvatar(userId);
+                return Ok("Avatar đã được xóa.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Lỗi khi xóa avatar: " + ex.Message);
+            }
+        }
+
 
         [HttpGet]
         [Route("/api/[Controller]/get-user-info")]
-        [Authorize] // Đảm bảo rằng người dùng đã xác thực bằng token
+        [Authorize] 
         public IActionResult GetUserInfo()
         {
             try
@@ -243,10 +265,7 @@ namespace VoAnhVu_DuAn1.Controllers
                 var userId = User.FindFirst("UserId")?.Value; // Lấy ID người dùng từ token
                 var username = User.FindFirst(ClaimTypes.Name)?.Value; // Lấy tên người dùng từ token
                 var roleName = User.FindFirst("RoleName")?.Value; // Lấy quyền người dùng từ token
-                // Xử lý logic dựa trên thông tin người dùng
-                // Ví dụ: Trả về danh sách quyền của người dùng
                 var userRoles = new List<string> { roleName };
-
                 return Ok(new
                 {
                     UserId = userId,

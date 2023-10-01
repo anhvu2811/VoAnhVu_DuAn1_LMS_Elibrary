@@ -20,6 +20,7 @@ namespace VoAnhVu_DuAn1.Service
         void changePassword(string id, string oldPassword, string newPassword);
         string getRoleNameByUserId(string id);
         void updateAvatar(string id, string avatarUrl);
+        void deleteAvatar(string id);
     }
     public class UserService : IUserService
     {
@@ -65,11 +66,11 @@ namespace VoAnhVu_DuAn1.Service
         {
             return _userRepository.GetUserByUsernameAndPassword(username, password);
         }
-        public void changePassword(string userId, string oldPassword, string newPassword)
+        public void changePassword(string id, string oldPassword, string newPassword)
         {
             try
             {
-                _userRepository.changePassword(userId, oldPassword, newPassword);
+                _userRepository.changePassword(id, oldPassword, newPassword);
             }
             catch (Exception ex)
             {
@@ -87,10 +88,21 @@ namespace VoAnhVu_DuAn1.Service
                 throw ex;
             }
         }
+        public void deleteAvatar(string id)
+        {
+            try
+            {
+                _userRepository.deleteAvatar(id);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public string getRoleNameByUserId(string id)
         {
-            // Gọi phương thức từ IUserRepository để lấy RoleName
             return _userRepository.getRoleNameByUserId(id);
         }
+
     }
 }
