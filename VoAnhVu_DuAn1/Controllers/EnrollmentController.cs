@@ -52,7 +52,8 @@ namespace VoAnhVu_DuAn1.Controllers
                 {
                     EnrollmentId = enrollment.EnrollmentId,
                     UserId = enrollment.User.UserId,
-                    SubjectId = enrollment.Subject.SubjectId
+                    SubjectId = enrollment.Subject.SubjectId,
+                    ClassId = enrollment.Class.ClassId
                 };
                 _enrollmentService.createEnrollment(enrollmentEntity);
                 return Ok(enrollmentEntity);
@@ -72,7 +73,8 @@ namespace VoAnhVu_DuAn1.Controllers
                 {
                     EnrollmentId = enrollment.EnrollmentId,
                     UserId = enrollment.User.UserId,
-                    SubjectId = enrollment.Subject.SubjectId
+                    SubjectId = enrollment.Subject.SubjectId,
+                    ClassId = enrollment.Class.ClassId
                 };
                 _enrollmentService.updateEnrollment(enrollmentEntity);
                 return Ok(enrollmentEntity);
@@ -94,6 +96,24 @@ namespace VoAnhVu_DuAn1.Controllers
                     return BadRequest("Không tìm thấy để xóa.");
                 }
                 return Ok("Xóa thành công.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpGet]
+        [Route("/api/[Controller]/get-list-subject")]
+        public IActionResult getListSubject(string userId)
+        {
+            try
+            {
+                var enrollment = _enrollmentService.getListSubject(userId).ToList();
+                if (!enrollment.Any())
+                {
+                    return BadRequest("Không tìm thấy danh sách môn học");
+                }
+                return Ok(enrollment);
             }
             catch (Exception ex)
             {

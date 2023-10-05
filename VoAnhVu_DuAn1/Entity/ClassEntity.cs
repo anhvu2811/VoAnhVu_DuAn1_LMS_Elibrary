@@ -7,12 +7,11 @@ using System.Threading.Tasks;
 
 namespace VoAnhVu_DuAn1.Entity
 {
-    [Table("Role")]
-    public class RoleEntity
+    [Table("Class")]
+    public class ClassEntity
     {
         [Key]
-        public string RoleId { get; set; }
-        public string RoleName { get; set; }
-        public string Description { get; set; }
+        public string ClassId { get; set; }
+        public string ClassName { get; set; }
     }
 }

@@ -219,7 +219,6 @@ namespace VoAnhVu_DuAn1.Controllers
                 {
                     return BadRequest("Vui lòng chọn tệp ảnh.");
                 }
-
                 var imagePath = Path.Combine(_webHostEnvironment.ContentRootPath, "Images");
                 var uniqueFileName = Guid.NewGuid().ToString() + "_avatar.jpg";
                 var fullPath = Path.Combine(imagePath, uniqueFileName);
@@ -228,7 +227,6 @@ namespace VoAnhVu_DuAn1.Controllers
                 {
                     avatarFile.CopyTo(fileStream);
                 }
-
                 user.Avatar = "/Images/" + uniqueFileName;
 
                 _userService.updateAvatar(userId, user.Avatar);

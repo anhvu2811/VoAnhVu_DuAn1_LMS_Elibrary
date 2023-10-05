@@ -9,6 +9,6 @@ namespace VoAnhVu_DuAn1.Model
     {
         public string RoleId { get; set; }
         public string RoleName { get; set; }
-        public string Decription { get; set; }
+        public string Description { get; set; }
     }
 }

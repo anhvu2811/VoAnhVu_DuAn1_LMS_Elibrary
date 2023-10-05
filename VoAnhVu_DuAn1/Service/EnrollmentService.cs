@@ -14,6 +14,7 @@ namespace VoAnhVu_DuAn1.Service
         void createEnrollment(EnrollmentEntity enrollment);
         void updateEnrollment(EnrollmentEntity enrollment);
         bool deleteEnrollment(string id);
+        List<EnrollmentModel> getListSubject(string userId);
     }
     public class EnrollmentService : IEnrollmentService
     {
@@ -45,6 +46,10 @@ namespace VoAnhVu_DuAn1.Service
         public void updateEnrollment(EnrollmentEntity enrollment)
         {
             _enrollmentRepository.updateEnrollment(enrollment);
+        }
+        public List<EnrollmentModel> getListSubject(string userId)
+        {
+            return _enrollmentRepository.getListSubject(userId).ToList();
         }
     }
 }

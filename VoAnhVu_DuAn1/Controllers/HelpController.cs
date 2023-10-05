@@ -42,7 +42,7 @@ namespace VoAnhVu_DuAn1.Controllers
         }
         [HttpPost]
         [Route("/api/[Controller]/create-help")]
-        public IActionResult createHelp(HelpModel help)
+        public IActionResult createHelp(HelpEntity help)
         {
             try
             {
@@ -55,7 +55,8 @@ namespace VoAnhVu_DuAn1.Controllers
                 {
                     HelpId = help.HelpId,
                     Title = help.Title,
-                    Content = help.Content
+                    Content = help.Content,
+                    UserId = help.UserId
                 };
                 _helpService.createHelp(helpEntity);
                 return Ok(helpEntity);
@@ -67,7 +68,7 @@ namespace VoAnhVu_DuAn1.Controllers
         }
         //[HttpPut]
         //[Route("/api/[Controller]/update-help")]
-        //public IActionResult updateHelp(HelpModel help)
+        //public IActionResult updateHelp(HelpEntity help)
         //{
         //    try
         //    {
@@ -75,7 +76,8 @@ namespace VoAnhVu_DuAn1.Controllers
         //        {
         //            HelpId = help.HelpId,
         //            Title = help.Title,
-        //            Content = help.Content
+        //            Content = help.Content,
+        //            UserId = help.UserId
         //        };
         //        _helpService.updateHelp(helpEntity);
         //        return Ok(helpEntity);
@@ -85,6 +87,7 @@ namespace VoAnhVu_DuAn1.Controllers
         //        return BadRequest(ex.Message);
         //    }
         //}
+
         [Authorize(Roles = "Lãnh đạo")]
         [HttpDelete]
         [Route("/api/[Controller]/delete-help")]

@@ -15,6 +15,7 @@ namespace VoAnhVu_DuAn1.Repository
         void createEnrollment(EnrollmentEntity enrollment);
         void updateEnrollment(EnrollmentEntity enrollment);
         bool deleteEnrollment(string id);
+        List<EnrollmentModel> getListSubject(string userId);
     }
     public class EnrollmentRepository : IEnrollmentRepository
     {
@@ -61,11 +62,13 @@ namespace VoAnhVu_DuAn1.Repository
             var enrollments = _context.EnrollmentEntities
               .Include(enrollment => enrollment.User)
               .Include(enrollment => enrollment.Subject)
-              .Select(enroment => new EnrollmentModel
+              .Include(enrollment => enrollment.Class)
+              .Select(enrollment => new EnrollmentModel
               {
-                  EnrollmentId = enroment.EnrollmentId,
-                  User = enroment.User,
-                  Subject = enroment.Subject
+                  EnrollmentId = enrollment.EnrollmentId,
+                  User = enrollment.User,
+                  Subject = enrollment.Subject,
+                  Class = enrollment.Class
               })
               .ToList();
             return enrollments;
@@ -83,5 +86,24 @@ namespace VoAnhVu_DuAn1.Repository
                 throw ex;
             }
         }
+        public List<EnrollmentModel> getListSubject(string userId)
+        {
+            var enrollments = _context.EnrollmentEntities
+                .Where(enrollment => enrollment.UserId == userId)
+                .Include(enrollment => enrollment.User)
+                .Include(enrollment => enrollment.Subject)
+                .Include(enrollment => enrollment.Class)
+                .Select(enrollment => new EnrollmentModel
+                {
+                    EnrollmentId = enrollment.EnrollmentId,
+                    User = enrollment.User,
+                    Subject = enrollment.Subject,
+                    Class = enrollment.Class
+                })
+                .ToList();
+
+            return enrollments;
+        }
+
     }
 }

@@ -17,7 +17,5 @@ namespace VoAnhVu_DuAn1.Entity
         public string? TopicId { get; set; }
 
         public TopicEntity? Topic { get; set; }
-        //public virtual ICollection<EnrollmentEntity> Enrollments { get; set; }
-        //public virtual ICollection<LectureEntity> Lectures { get; set; }
     }
 }

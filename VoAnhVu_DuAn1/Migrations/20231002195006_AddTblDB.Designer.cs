@@ -9,8 +9,8 @@ using VoAnhVu_DuAn1.Model;
 namespace VoAnhVu_DuAn1.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20230927171750_AllTblAnswer")]
-    partial class AllTblAnswer
+    [Migration("20231002195006_AddTblDB")]
+    partial class AddTblDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -38,9 +38,25 @@ namespace VoAnhVu_DuAn1.Migrations
                     b.ToTable("Answer");
                 });
 
+            modelBuilder.Entity("VoAnhVu_DuAn1.Entity.ClassEntity", b =>
+                {
+                    b.Property<string>("ClassId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ClassName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ClassId");
+
+                    b.ToTable("Class");
+                });
+
             modelBuilder.Entity("VoAnhVu_DuAn1.Entity.EnrollmentEntity", b =>
                 {
                     b.Property<string>("EnrollmentId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ClassId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("SubjectId")
@@ -50,6 +66,8 @@ namespace VoAnhVu_DuAn1.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("EnrollmentId");
+
+                    b.HasIndex("ClassId");
 
                     b.HasIndex("SubjectId");
 
@@ -69,7 +87,12 @@ namespace VoAnhVu_DuAn1.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("HelpId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Help");
                 });
@@ -126,7 +149,7 @@ namespace VoAnhVu_DuAn1.Migrations
                     b.Property<string>("RoleId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Decription")
+                    b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RoleName")
@@ -221,6 +244,10 @@ namespace VoAnhVu_DuAn1.Migrations
 
             modelBuilder.Entity("VoAnhVu_DuAn1.Entity.EnrollmentEntity", b =>
                 {
+                    b.HasOne("VoAnhVu_DuAn1.Entity.ClassEntity", "Class")
+                        .WithMany()
+                        .HasForeignKey("ClassId");
+
                     b.HasOne("VoAnhVu_DuAn1.Entity.SubjectEntity", "Subject")
                         .WithMany()
                         .HasForeignKey("SubjectId");
@@ -229,7 +256,18 @@ namespace VoAnhVu_DuAn1.Migrations
                         .WithMany()
                         .HasForeignKey("UserId");
 
+                    b.Navigation("Class");
+
                     b.Navigation("Subject");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("VoAnhVu_DuAn1.Entity.HelpEntity", b =>
+                {
+                    b.HasOne("VoAnhVu_DuAn1.Entity.UserEntity", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
 
                     b.Navigation("User");
                 });

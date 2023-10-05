@@ -2,21 +2,20 @@
 
 namespace VoAnhVu_DuAn1.Migrations
 {
-    public partial class AddTbl : Migration
+    public partial class AddTblDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Help",
+                name: "Class",
                 columns: table => new
                 {
-                    HelpId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Content = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    ClassId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ClassName = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Help", x => x.HelpId);
+                    table.PrimaryKey("PK_Class", x => x.ClassId);
                 });
 
             migrationBuilder.CreateTable(
@@ -25,7 +24,7 @@ namespace VoAnhVu_DuAn1.Migrations
                 {
                     RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     RoleName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Decription = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -91,16 +90,43 @@ namespace VoAnhVu_DuAn1.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Help",
+                columns: table => new
+                {
+                    HelpId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Help", x => x.HelpId);
+                    table.ForeignKey(
+                        name: "FK_Help_User_UserId",
+                        column: x => x.UserId,
+                        principalTable: "User",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Enrollment",
                 columns: table => new
                 {
                     EnrollmentId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    SubjectId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    SubjectId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    ClassId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Enrollment", x => x.EnrollmentId);
+                    table.ForeignKey(
+                        name: "FK_Enrollment_Class_ClassId",
+                        column: x => x.ClassId,
+                        principalTable: "Class",
+                        principalColumn: "ClassId",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Enrollment_Subject_SubjectId",
                         column: x => x.SubjectId,
@@ -136,6 +162,61 @@ namespace VoAnhVu_DuAn1.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Question",
+                columns: table => new
+                {
+                    QuestionId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    QuestionText = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LectureId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Question", x => x.QuestionId);
+                    table.ForeignKey(
+                        name: "FK_Question_Lecture_LectureId",
+                        column: x => x.LectureId,
+                        principalTable: "Lecture",
+                        principalColumn: "LectureId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Question_User_UserId",
+                        column: x => x.UserId,
+                        principalTable: "User",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Answer",
+                columns: table => new
+                {
+                    AnswerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    AnswerText = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    QuestionId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Answer", x => x.AnswerId);
+                    table.ForeignKey(
+                        name: "FK_Answer_Question_QuestionId",
+                        column: x => x.QuestionId,
+                        principalTable: "Question",
+                        principalColumn: "QuestionId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Answer_QuestionId",
+                table: "Answer",
+                column: "QuestionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Enrollment_ClassId",
+                table: "Enrollment",
+                column: "ClassId");
+
             migrationBuilder.CreateIndex(
                 name: "IX_Enrollment_SubjectId",
                 table: "Enrollment",
@@ -147,9 +228,24 @@ namespace VoAnhVu_DuAn1.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Help_UserId",
+                table: "Help",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Lecture_SubjectId",
                 table: "Lecture",
                 column: "SubjectId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Question_LectureId",
+                table: "Question",
+                column: "LectureId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Question_UserId",
+                table: "Question",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Subject_TopicId",
@@ -165,10 +261,19 @@ namespace VoAnhVu_DuAn1.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Answer");
+
+            migrationBuilder.DropTable(
                 name: "Enrollment");
 
             migrationBuilder.DropTable(
                 name: "Help");
+
+            migrationBuilder.DropTable(
+                name: "Question");
+
+            migrationBuilder.DropTable(
+                name: "Class");
 
             migrationBuilder.DropTable(
                 name: "Lecture");

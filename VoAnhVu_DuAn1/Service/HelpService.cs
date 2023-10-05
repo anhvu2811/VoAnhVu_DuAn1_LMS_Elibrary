@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using VoAnhVu_DuAn1.Entity;
+using VoAnhVu_DuAn1.Model;
 using VoAnhVu_DuAn1.Repository;
 
 namespace VoAnhVu_DuAn1.Service
 {
     public interface IHelpService
     {
-        List<HelpEntity> getAllHelp();
+        List<HelpModel> getAllHelp();
         void createHelp(HelpEntity help);
         void updateHelp(HelpEntity help);
         bool deleteHelp(string id);
@@ -37,7 +38,7 @@ namespace VoAnhVu_DuAn1.Service
             return true;
         }
 
-        public List<HelpEntity> getAllHelp()
+        public List<HelpModel> getAllHelp()
         {
             return _helpRepository.getAllHelp().ToList();
         }

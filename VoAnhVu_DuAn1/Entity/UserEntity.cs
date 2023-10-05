@@ -25,6 +25,5 @@ namespace VoAnhVu_DuAn1.Entity
         public string? RoleId { get; set; }
 
         public RoleEntity? Role { get; set; }
-        //public virtual ICollection<EnrollmentEntity> Enrollments { get; set; }
     }
 }

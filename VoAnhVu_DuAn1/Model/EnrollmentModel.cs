@@ -11,5 +11,6 @@ namespace VoAnhVu_DuAn1.Model
         public string EnrollmentId { get; set; }
         public UserEntity? User { get; set; }
         public SubjectEntity? Subject { get; set; }
+        public ClassEntity? Class { get; set; }
     }
 }

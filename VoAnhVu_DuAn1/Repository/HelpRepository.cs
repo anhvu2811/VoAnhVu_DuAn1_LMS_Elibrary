@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using VoAnhVu_DuAn1.Entity;
 using VoAnhVu_DuAn1.Model;
+using VoAnhVu_DuAn1.Entity;
+using Microsoft.EntityFrameworkCore;
 
 namespace VoAnhVu_DuAn1.Repository
 {
     public interface IHelpRepository
     {
-        List<HelpEntity> getAllHelp();
+        List<HelpModel> getAllHelp();
         void createHelp(HelpEntity help);
         void updateHelp(HelpEntity help);
         bool deleteHelp(string id);
@@ -54,10 +55,18 @@ namespace VoAnhVu_DuAn1.Repository
             }
         }
 
-        public List<HelpEntity> getAllHelp()
+        public List<HelpModel> getAllHelp()
         {
-            var help = _context.HelpEntities.ToList();
-            return help;
+            var helps = _context.HelpEntities
+             .Include(help => help.User)
+             .Select(help => new HelpModel
+             {
+                 HelpId = help.HelpId,
+                 Title = help.Title,
+                 Content = help.Content,
+                 User = help.User
+             }).ToList();
+            return helps;
         }
 
         public void updateHelp(HelpEntity help)

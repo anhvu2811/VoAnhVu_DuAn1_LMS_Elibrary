@@ -55,7 +55,7 @@ namespace VoAnhVu_DuAn1.Controllers
                 {
                     RoleId = role.RoleId,
                     RoleName = role.RoleName,
-                    Decription = role.Decription,
+                    Description = role.Description,
                 };
                 _roleService.createRole(roleEntity);
                 return Ok(roleEntity);
@@ -75,7 +75,7 @@ namespace VoAnhVu_DuAn1.Controllers
                 {
                     RoleId = role.RoleId,
                     RoleName = role.RoleName,
-                    Decription = role.Decription,
+                    Description = role.Description,
                 };
                 _roleService.updateRole(rl);
                 return Ok(rl);

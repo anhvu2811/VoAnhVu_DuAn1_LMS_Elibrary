@@ -77,6 +77,9 @@ namespace VoAnhVu_DuAn1
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
 
+            services.AddScoped<IClassRepository, ClassRepository>();
+            services.AddScoped<IClassService, ClassService>();
+
             services.AddScoped<IEnrollmentRepository, EnrollmentRepository>();
             services.AddScoped<IEnrollmentService, EnrollmentService>();
 

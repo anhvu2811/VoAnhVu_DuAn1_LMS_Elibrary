@@ -12,12 +12,19 @@ namespace VoAnhVu_DuAn1.Entity
     {
         [Key]
         public string EnrollmentId { get; set; }
+        
         [ForeignKey("UserId")]
         public string? UserId { get; set; }
+        
         [ForeignKey("SubjectId")]
         public string? SubjectId { get; set; }
 
+        [ForeignKey("ClassId")]
+        public string? ClassId { get; set; }
+
         public virtual UserEntity? User { get; set; }
         public virtual SubjectEntity? Subject { get; set; }
+        public virtual ClassEntity? Class { get; set; }
+
     }
 }

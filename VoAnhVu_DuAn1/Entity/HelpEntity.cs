@@ -14,5 +14,10 @@ namespace VoAnhVu_DuAn1.Entity
         public string HelpId { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }
+
+        [ForeignKey("UserId")]
+        public string? UserId { get; set; }
+
+        public UserEntity? User { get; set; }
     }
 }

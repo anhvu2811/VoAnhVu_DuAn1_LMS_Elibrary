@@ -29,7 +29,7 @@ namespace VoAnhVu_DuAn1.Repository
         {
             _context = context;
         }
-        public void createUser([FromBody] UserEntity user)
+        public void createUser(UserEntity user)
         {
             try
             {
