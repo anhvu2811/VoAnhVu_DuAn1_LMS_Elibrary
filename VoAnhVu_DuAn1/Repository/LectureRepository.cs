@@ -57,15 +57,13 @@ namespace VoAnhVu_DuAn1.Repository
 
         public List<LectureModel> getAllLecture()
         {
-            var lectures = _context.LectureEntities
-             .Include(lecture => lecture.Subject) 
+            var lectures = _context.LectureEntities 
              .Select(lecture => new LectureModel
              {
                  LectureId = lecture.LectureId,
                  Title = lecture.Title,
                  FileUpload = lecture.FileUpload,
-                 Time = lecture.Time,
-                 Subject = lecture.Subject 
+                 Time = lecture.Time
              })
              .ToList();
 

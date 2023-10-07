@@ -103,9 +103,6 @@ namespace VoAnhVu_DuAn1.Migrations
                     b.Property<string>("FileUpload")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("SubjectId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("Time")
                         .HasColumnType("nvarchar(max)");
 
@@ -113,8 +110,6 @@ namespace VoAnhVu_DuAn1.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("LectureId");
-
-                    b.HasIndex("SubjectId");
 
                     b.ToTable("Lecture");
                 });
@@ -268,15 +263,6 @@ namespace VoAnhVu_DuAn1.Migrations
                         .HasForeignKey("UserId");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("VoAnhVu_DuAn1.Entity.LectureEntity", b =>
-                {
-                    b.HasOne("VoAnhVu_DuAn1.Entity.SubjectEntity", "Subject")
-                        .WithMany()
-                        .HasForeignKey("SubjectId");
-
-                    b.Navigation("Subject");
                 });
 
             modelBuilder.Entity("VoAnhVu_DuAn1.Entity.QuestionEntity", b =>

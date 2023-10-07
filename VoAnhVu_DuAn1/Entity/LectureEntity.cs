@@ -15,8 +15,5 @@ namespace VoAnhVu_DuAn1.Entity
         public string Title { get; set; }
         public string FileUpload { get; set; }
         public string Time { get; set; }
-        [ForeignKey("SubjectId")]
-        public string? SubjectId { get; set; }
-        public SubjectEntity Subject { get; set; }
     }
 }

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\vuvo0\\OneDrive\\Desktop\\Test\\VoAnhVu_DuAn1\\VoAnhVu_DuAn1\\VoAnhVu_DuAn1.csproj": {}
+    "C:\\Users\\vuvo0\\OneDrive\\Desktop\\Thực tập\\Dự Án 1\\VoAnhVu_DuAn1\\VoAnhVu_DuAn1\\VoAnhVu_DuAn1.csproj": {}
   },
   "projects": {
-    "C:\\Users\\vuvo0\\OneDrive\\Desktop\\Test\\VoAnhVu_DuAn1\\VoAnhVu_DuAn1\\VoAnhVu_DuAn1.csproj": {
+    "C:\\Users\\vuvo0\\OneDrive\\Desktop\\Thực tập\\Dự Án 1\\VoAnhVu_DuAn1\\VoAnhVu_DuAn1\\VoAnhVu_DuAn1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\vuvo0\\OneDrive\\Desktop\\Test\\VoAnhVu_DuAn1\\VoAnhVu_DuAn1\\VoAnhVu_DuAn1.csproj",
+        "projectUniqueName": "C:\\Users\\vuvo0\\OneDrive\\Desktop\\Thực tập\\Dự Án 1\\VoAnhVu_DuAn1\\VoAnhVu_DuAn1\\VoAnhVu_DuAn1.csproj",
         "projectName": "VoAnhVu_DuAn1",
-        "projectPath": "C:\\Users\\vuvo0\\OneDrive\\Desktop\\Test\\VoAnhVu_DuAn1\\VoAnhVu_DuAn1\\VoAnhVu_DuAn1.csproj",
+        "projectPath": "C:\\Users\\vuvo0\\OneDrive\\Desktop\\Thực tập\\Dự Án 1\\VoAnhVu_DuAn1\\VoAnhVu_DuAn1\\VoAnhVu_DuAn1.csproj",
         "packagesPath": "C:\\Users\\vuvo0\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\vuvo0\\OneDrive\\Desktop\\Test\\VoAnhVu_DuAn1\\VoAnhVu_DuAn1\\obj\\",
+        "outputPath": "C:\\Users\\vuvo0\\OneDrive\\Desktop\\Thực tập\\Dự Án 1\\VoAnhVu_DuAn1\\VoAnhVu_DuAn1\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\vuvo0\\AppData\\Roaming\\NuGet\\NuGet.Config",

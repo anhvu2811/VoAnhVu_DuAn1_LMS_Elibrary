@@ -12,6 +12,5 @@ namespace VoAnhVu_DuAn1.Model
         public string Title { get; set; }
         public string FileUpload { get; set; }
         public string Time { get; set; }
-        public SubjectEntity Subject { get; set; }
     }
 }

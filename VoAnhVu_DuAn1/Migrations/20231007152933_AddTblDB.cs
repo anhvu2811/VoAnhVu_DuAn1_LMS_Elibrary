@@ -19,6 +19,20 @@ namespace VoAnhVu_DuAn1.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Lecture",
+                columns: table => new
+                {
+                    LectureId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FileUpload = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Time = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Lecture", x => x.LectureId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Role",
                 columns: table => new
                 {
@@ -110,6 +124,32 @@ namespace VoAnhVu_DuAn1.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Question",
+                columns: table => new
+                {
+                    QuestionId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    QuestionText = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LectureId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Question", x => x.QuestionId);
+                    table.ForeignKey(
+                        name: "FK_Question_Lecture_LectureId",
+                        column: x => x.LectureId,
+                        principalTable: "Lecture",
+                        principalColumn: "LectureId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Question_User_UserId",
+                        column: x => x.UserId,
+                        principalTable: "User",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Enrollment",
                 columns: table => new
                 {
@@ -135,53 +175,6 @@ namespace VoAnhVu_DuAn1.Migrations
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Enrollment_User_UserId",
-                        column: x => x.UserId,
-                        principalTable: "User",
-                        principalColumn: "UserId",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Lecture",
-                columns: table => new
-                {
-                    LectureId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FileUpload = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Time = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SubjectId = table.Column<string>(type: "nvarchar(450)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Lecture", x => x.LectureId);
-                    table.ForeignKey(
-                        name: "FK_Lecture_Subject_SubjectId",
-                        column: x => x.SubjectId,
-                        principalTable: "Subject",
-                        principalColumn: "SubjectId",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Question",
-                columns: table => new
-                {
-                    QuestionId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    QuestionText = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LectureId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Question", x => x.QuestionId);
-                    table.ForeignKey(
-                        name: "FK_Question_Lecture_LectureId",
-                        column: x => x.LectureId,
-                        principalTable: "Lecture",
-                        principalColumn: "LectureId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Question_User_UserId",
                         column: x => x.UserId,
                         principalTable: "User",
                         principalColumn: "UserId",
@@ -233,11 +226,6 @@ namespace VoAnhVu_DuAn1.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Lecture_SubjectId",
-                table: "Lecture",
-                column: "SubjectId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Question_LectureId",
                 table: "Question",
                 column: "LectureId");
@@ -276,19 +264,19 @@ namespace VoAnhVu_DuAn1.Migrations
                 name: "Class");
 
             migrationBuilder.DropTable(
+                name: "Subject");
+
+            migrationBuilder.DropTable(
                 name: "Lecture");
 
             migrationBuilder.DropTable(
                 name: "User");
 
             migrationBuilder.DropTable(
-                name: "Subject");
+                name: "Topic");
 
             migrationBuilder.DropTable(
                 name: "Role");
-
-            migrationBuilder.DropTable(
-                name: "Topic");
         }
     }
 }

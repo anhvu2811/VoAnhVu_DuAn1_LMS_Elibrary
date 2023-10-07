@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "w3GFSdqnMwgalOW6aTrXrwjU4gPAB+5+K2aQU4eWFUVUZPleyoDFROX0qJ+QDTMd+bzNmuLJxNMr2RaTXvC0ew==",
+  "dgSpecHash": "zwPxhFaLHtlTVu634HVMxnehP/qauNVtgZLa2vXs9FYT87AsJweVLIPQMsCEIug1Lh1MxKxiowZWD08Dh88HLg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\vuvo0\\OneDrive\\Desktop\\Test\\VoAnhVu_DuAn1\\VoAnhVu_DuAn1\\VoAnhVu_DuAn1.csproj",
+  "projectFilePath": "C:\\Users\\vuvo0\\OneDrive\\Desktop\\Thực tập\\Dự Án 1\\VoAnhVu_DuAn1\\VoAnhVu_DuAn1\\VoAnhVu_DuAn1.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\vuvo0\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\vuvo0\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\5.0.17\\microsoft.aspnetcore.authentication.jwtbearer.5.0.17.nupkg.sha512",
