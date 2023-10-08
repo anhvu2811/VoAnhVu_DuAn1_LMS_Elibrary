@@ -62,20 +62,20 @@ namespace VoAnhVu_DuAn1.Repository
         public List<UserModel> getAllUser()
         {
             var users = _context.UserEntities
-             .Include(user => user.Role) 
-             .Select(user => new UserModel
-             {
-                 UserId = user.UserId,
-                 Avatar = user.Avatar,
-                 FullName = user.FullName,
-                 Gender = user.Gender,
-                 Email = user.Email,
-                 Phone = user.Phone,
-                 Address = user.Address,
-                 Username = user.Username,
-                 Password = user.Password,
-                 Role = user.Role
-            }).ToList();
+                 .Include(user => user.Role) 
+                 .Select(user => new UserModel
+                 {
+                     UserId = user.UserId,
+                     Avatar = user.Avatar,
+                     FullName = user.FullName,
+                     Gender = user.Gender,
+                     Email = user.Email,
+                     Phone = user.Phone,
+                     Address = user.Address,
+                     Username = user.Username,
+                     Password = user.Password,
+                     Role = user.Role
+                }).ToList();
             return users;
         }
         public UserModel getUserById(string id)

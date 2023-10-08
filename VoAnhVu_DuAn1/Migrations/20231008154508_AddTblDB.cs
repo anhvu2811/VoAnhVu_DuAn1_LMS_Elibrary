@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace VoAnhVu_DuAn1.Migrations
 {
@@ -19,6 +20,21 @@ namespace VoAnhVu_DuAn1.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Exam",
+                columns: table => new
+                {
+                    ExamId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ExamName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    StartTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EndTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Exam", x => x.ExamId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Lecture",
                 columns: table => new
                 {
@@ -30,6 +46,18 @@ namespace VoAnhVu_DuAn1.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Lecture", x => x.LectureId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "QuestionBank",
+                columns: table => new
+                {
+                    QuestionBankId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    QuestionBankName = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_QuestionBank", x => x.QuestionBankId);
                 });
 
             migrationBuilder.CreateTable(
@@ -56,6 +84,26 @@ namespace VoAnhVu_DuAn1.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Topic", x => x.TopicId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Questions",
+                columns: table => new
+                {
+                    QuestionId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    QuestionType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    QuestionName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    QuestionBankId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Questions", x => x.QuestionId);
+                    table.ForeignKey(
+                        name: "FK_Questions_QuestionBank_QuestionBankId",
+                        column: x => x.QuestionBankId,
+                        principalTable: "QuestionBank",
+                        principalColumn: "QuestionBankId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -100,6 +148,57 @@ namespace VoAnhVu_DuAn1.Migrations
                         column: x => x.TopicId,
                         principalTable: "Topic",
                         principalColumn: "TopicId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "QuestionExam",
+                columns: table => new
+                {
+                    QuestionExamId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ExamId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    QuestionId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_QuestionExam", x => x.QuestionExamId);
+                    table.ForeignKey(
+                        name: "FK_QuestionExam_Exam_ExamId",
+                        column: x => x.ExamId,
+                        principalTable: "Exam",
+                        principalColumn: "ExamId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_QuestionExam_Questions_QuestionId",
+                        column: x => x.QuestionId,
+                        principalTable: "Questions",
+                        principalColumn: "QuestionId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ExamResult",
+                columns: table => new
+                {
+                    ExamResultId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    ExamId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Score = table.Column<float>(type: "real", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ExamResult", x => x.ExamResultId);
+                    table.ForeignKey(
+                        name: "FK_ExamResult_Exam_ExamId",
+                        column: x => x.ExamId,
+                        principalTable: "Exam",
+                        principalColumn: "ExamId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_ExamResult_User_UserId",
+                        column: x => x.UserId,
+                        principalTable: "User",
+                        principalColumn: "UserId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -221,6 +320,16 @@ namespace VoAnhVu_DuAn1.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ExamResult_ExamId",
+                table: "ExamResult",
+                column: "ExamId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ExamResult_UserId",
+                table: "ExamResult",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Help_UserId",
                 table: "Help",
                 column: "UserId");
@@ -234,6 +343,21 @@ namespace VoAnhVu_DuAn1.Migrations
                 name: "IX_Question_UserId",
                 table: "Question",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_QuestionExam_ExamId",
+                table: "QuestionExam",
+                column: "ExamId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_QuestionExam_QuestionId",
+                table: "QuestionExam",
+                column: "QuestionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Questions_QuestionBankId",
+                table: "Questions",
+                column: "QuestionBankId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Subject_TopicId",
@@ -255,7 +379,13 @@ namespace VoAnhVu_DuAn1.Migrations
                 name: "Enrollment");
 
             migrationBuilder.DropTable(
+                name: "ExamResult");
+
+            migrationBuilder.DropTable(
                 name: "Help");
+
+            migrationBuilder.DropTable(
+                name: "QuestionExam");
 
             migrationBuilder.DropTable(
                 name: "Question");
@@ -267,6 +397,12 @@ namespace VoAnhVu_DuAn1.Migrations
                 name: "Subject");
 
             migrationBuilder.DropTable(
+                name: "Exam");
+
+            migrationBuilder.DropTable(
+                name: "Questions");
+
+            migrationBuilder.DropTable(
                 name: "Lecture");
 
             migrationBuilder.DropTable(
@@ -274,6 +410,9 @@ namespace VoAnhVu_DuAn1.Migrations
 
             migrationBuilder.DropTable(
                 name: "Topic");
+
+            migrationBuilder.DropTable(
+                name: "QuestionBank");
 
             migrationBuilder.DropTable(
                 name: "Role");

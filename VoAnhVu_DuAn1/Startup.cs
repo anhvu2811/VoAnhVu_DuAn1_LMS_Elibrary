@@ -101,6 +101,21 @@ namespace VoAnhVu_DuAn1
             services.AddScoped<IAnswerRepository, AnswerRepository>();
             services.AddScoped<IAnswerService, AnswerService>();
 
+            services.AddScoped<IQuestionBankRepository, QuestionBankRepository>();
+            services.AddScoped<IQuestionBankService, QuestionBankService>();
+
+            services.AddScoped<IExamRepository, ExamRepository>();
+            services.AddScoped<IExamService, ExamService>();
+
+            services.AddScoped<IQuestionsRepository, QuestionsRepository>();
+            services.AddScoped<IQuestionsService, QuestionsService>();
+
+            services.AddScoped<IQuestionExamRepository, QuestionExamRepository>();
+            services.AddScoped<IQuestionExamService, QuestionExamService>();
+
+            services.AddScoped<IExamResultRepository, ExamResultRepository>();
+            services.AddScoped<IExamResultService, ExamResultService>();
+
             services.AddScoped<AuthenticationService>();
 
             services.Configure<AppSetting>(Configuration.GetSection("AppSettings"));
