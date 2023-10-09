@@ -165,6 +165,9 @@ namespace VoAnhVu_DuAn1.Migrations
                     b.Property<string>("QuestionBankId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("Level")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("QuestionBankName")
                         .HasColumnType("nvarchar(max)");
 

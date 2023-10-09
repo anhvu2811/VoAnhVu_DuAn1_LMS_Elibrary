@@ -13,5 +13,6 @@ namespace VoAnhVu_DuAn1.Entity
         [Key]
         public string QuestionBankId { get; set; }
         public string QuestionBankName { get; set; }
+        public string Level { get; set; }
     }
 }

@@ -53,7 +53,8 @@ namespace VoAnhVu_DuAn1.Migrations
                 columns: table => new
                 {
                     QuestionBankId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    QuestionBankName = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    QuestionBankName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Level = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {

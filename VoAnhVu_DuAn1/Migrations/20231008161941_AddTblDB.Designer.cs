@@ -10,7 +10,7 @@ using VoAnhVu_DuAn1.Model;
 namespace VoAnhVu_DuAn1.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20231008154508_AddTblDB")]
+    [Migration("20231008161941_AddTblDB")]
     partial class AddTblDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -166,6 +166,9 @@ namespace VoAnhVu_DuAn1.Migrations
                 {
                     b.Property<string>("QuestionBankId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Level")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("QuestionBankName")
                         .HasColumnType("nvarchar(max)");

@@ -9,5 +9,6 @@ namespace VoAnhVu_DuAn1.Model
     {
         public string QuestionBankId { get; set; }
         public string QuestionBankName { get; set; }
+        public string Level { get; set; }
     }
 }

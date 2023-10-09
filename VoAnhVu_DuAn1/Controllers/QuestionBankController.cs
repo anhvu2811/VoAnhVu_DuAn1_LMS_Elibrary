@@ -52,7 +52,8 @@ namespace VoAnhVu_DuAn1.Controllers
                 QuestionBankEntity questionBankEntity = new QuestionBankEntity
                 {
                     QuestionBankId = qb.QuestionBankId,
-                    QuestionBankName = qb.QuestionBankName
+                    QuestionBankName = qb.QuestionBankName,
+                    Level = qb.Level
                 };
                 _questionBankService.createQuestionBank(questionBankEntity);
                 return Ok(questionBankEntity);
@@ -71,7 +72,8 @@ namespace VoAnhVu_DuAn1.Controllers
                 QuestionBankEntity questionBankEntity = new QuestionBankEntity
                 {
                     QuestionBankId = qb.QuestionBankId,
-                    QuestionBankName = qb.QuestionBankName
+                    QuestionBankName = qb.QuestionBankName,
+                    Level = qb.Level
                 };
                 _questionBankService.updateQuestionBank(questionBankEntity);
                 return Ok(questionBankEntity);
