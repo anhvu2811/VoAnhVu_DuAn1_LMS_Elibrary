@@ -220,7 +220,7 @@ namespace VoAnhVu_DuAn1.Controllers
                     return BadRequest("Vui lòng chọn tệp ảnh.");
                 }
                 var imagePath = Path.Combine(_webHostEnvironment.ContentRootPath, "Images");
-                var uniqueFileName = Guid.NewGuid().ToString() + "_avatar.jpg";
+                var uniqueFileName = avatarFile.FileName;
                 var fullPath = Path.Combine(imagePath, uniqueFileName);
 
                 using (var fileStream = new FileStream(fullPath, FileMode.Create))

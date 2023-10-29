@@ -36,7 +36,7 @@ namespace VoAnhVu_DuAn1
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "VoAnhVu_DuAn1", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "VoAnhVu_DuAn1 (Learning Management System)", Version = "v1" });
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Description = @"JWT Authorization header using the Bearer scheme. \r\n\r\n
